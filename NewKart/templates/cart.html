@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+{% include 'base.html' %}
+
+{% block content %}
+<html>
+    <style>
+        .cart-product-img{
+            height: 150px;
+        }
+    </style>
+   <body>
+      <!-- Cart Section -->
+      <section class="cart_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="heading_container heading_center">
+                     <h2>Your Cart</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="table-responsive">
+                     <table class="table cart-table">
+                        <thead>
+                           <tr>
+                              <th>Product</th>
+                              <th>Name</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                              <th>Total</th>
+                              <th>Remove</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <!-- Sample Product Row -->
+                           <tr>
+                              <td>
+                                 <img src="{% static 'images/p10.png' %}" alt="Product Image" class="cart-product-img">
+                              </td>
+                              <td>Men's Shirt</td>
+                              <td>$75</td>
+                              <td>
+                                 <input type="number" value="1" min="1" class="form-control quantity-input">
+                              </td>
+                              <td>$75</td>
+                              <td>
+                                 <button class="btn btn-danger btn-sm">Remove</button>
+                              </td>
+                           </tr>
+                           <!-- Repeat similar rows for other products -->
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="row mt-4">
+               <div class="col-md-6">
+                  <a href="#" class="btn btn-outline-secondary">Continue Shopping</a>
+               </div>
+               <div class="col-md-6 text-right">
+                  <h4>Grand Total: $150</h4>
+                  <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- End Cart Section -->
+   </body>
+</html>
+{% endblock %}
+
+{% include 'footer.html' %}
