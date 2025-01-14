@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load chunks %}
+{% load static %}
 {% include 'base.html' %}
 
 {% block content %}
@@ -104,81 +106,45 @@
                </h2>
             </div>
             <div class="row">
+               {% for product in featured_products %}
                <div class="col-md-4">
                   <div class="box">
                      <div class="option_container">
                         <div class="options">
+                           {% if user.is_authenticated %}
                            <a href="{% url 'cart' %}" class="option1">
                            Add To Cart
                            </a>
-                           <a href="{% url 'products_detials' %}" class="option2">
+                           {% else %}
+                           <a href="{% url 'login' %}" class="option1">
+                              Add To Cart
+                           </a>
+                           {% endif %}
+                           {% if user.is_authenticated %}
+                           <a href="/products_details/{{ product.id }}/" class="option2">
                            Buy Now
                            </a>
+                           {% else %}
+                           <a href="{% url 'login' %}" class="option2">
+                              Buy Now
+                           </a>
+                           {% endif %}
                         </div>
                      </div>
                      <div class="img-box">
-                        <img src="{% static 'images/p1.png' %}" alt="">
+                        <img src="{{ product.image.url }}" alt="">
                      </div>
                      <div class="detail-box">
                         <h5>
-                           Men's Shirt
+                              {{ product.title }}
                         </h5>
                         <h6>
-                           $75
+                           ${{ product.price }}
                         </h6>
                      </div>
                   </div>
                </div>
-               <div class="col-md-4">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="{% url 'cart' %}" class="option1">
-                           Add To Cart
-                           </a>
-                           <a href="{% url 'products_detials' %}" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src="{% static 'images/p2.png' %}" alt="">
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Women's Dress
-                        </h5>
-                        <h6>
-                           $68
-                        </h6>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="box">
-                     <div class="option_container">
-                        <div class="options">
-                           <a href="{% url 'cart' %}" class="option1">
-                           Add To Cart
-                           </a>
-                           <a href="{% url 'products_detials' %}" class="option2">
-                           Buy Now
-                           </a>
-                        </div>
-                     </div>
-                     <div class="img-box">
-                        <img src="{% static 'images/p3.png' %}" alt="">
-                     </div>
-                     <div class="detail-box">
-                        <h5>
-                           Women's Dress
-                        </h5>
-                        <h6>
-                           $70
-                        </h6>
-                     </div>
-                  </div>
-               </div>
+               {% endfor %}
             </div>
          </div>
       </section>
