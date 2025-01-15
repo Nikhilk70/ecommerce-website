@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 {% include 'base.html' %}
+{% load chunks %}
 
 {% block content %}
 <html>
@@ -8,65 +9,90 @@
         .cart-product-img{
             height: 150px;
         }
+        table {
+            margin: auto;
+            border-collapse: separate; /* Ensures border-spacing works */
+            border-spacing: 10px 5px; /* Adds a 10px gap between columns and 5px between rows */
+            width: 90%; /* Adjust width as needed */
+        }
+    
+        th, td {
+            text-align: center;
+            padding: 8px;
+        } 
+        .total {
+            text-align: right;
+            margin-right: 75px;
+        }
     </style>
    <body>
       <!-- Cart Section -->
-      <section class="cart_section layout_padding">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="heading_container heading_center">
-                     <h2>Your Cart</h2>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="table-responsive">
-                     <table class="table cart-table">
-                        <thead>
-                           <tr>
-                              <th>Product</th>
-                              <th>Name</th>
-                              <th>Price</th>
-                              <th>Quantity</th>
-                              <th>Total</th>
-                              <th>Remove</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <!-- Sample Product Row -->
-                           <tr>
-                              <td>
-                                 <img src="{% static 'images/p10.png' %}" alt="Product Image" class="cart-product-img">
-                              </td>
-                              <td>Men's Shirt</td>
-                              <td>$75</td>
-                              <td>
-                                 <input type="number" value="1" min="1" class="form-control quantity-input">
-                              </td>
-                              <td>$75</td>
-                              <td>
-                                 <button class="btn btn-danger btn-sm">Remove</button>
-                              </td>
-                           </tr>
-                           <!-- Repeat similar rows for other products -->
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
-            <div class="row mt-4">
-               <div class="col-md-6">
-                  <a href="{% url 'products' %}" class="btn btn-outline-secondary">Continue Shopping</a>
-               </div>
-               <div class="col-md-6 text-right">
-                  <h4>Grand Total: $150</h4>
-                  <a href="#" class="btn btn-primary">Proceed to Checkout</a>
-               </div>
-            </div>
-         </div>
-      </section>
+      <div class="container">
+        <h1>Your Cart</h1>
+
+        {% if cart.added_items.all %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th></th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.added_items.all %}
+                <tr>
+                    <td>
+                        {% if item.product.image %}
+                            <a href="{% url 'products' %}"><img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" class="cart-product-img"></a>
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.product.title }}</td>
+                    <td>${{ item.product.price }}</td>
+                    <td>
+                        <form method="POST" class="update-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td>${{ item.product.price|floatformat:2|floatformat:2|add:item.quantity|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+        </table>
+        <br>
+        <br>
+        <h3 class="total">Total: ${{ total_price|floatformat:2 }}</h3>
+        <script>
+            // Handle Update Quantity via AJAX
+            $(document).on('submit', '.update-form', function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'update_cart_item' %}",
+                    data: form.serialize(),
+                    success: function (response) {
+                        window.location.reload(); // Reload the page to reflect changes
+                    },
+                    error: function (response) {
+                        alert('Error updating cart item!');
+                    }
+                });
+            });
+        </script>
+        </div>
       <!-- End Cart Section -->
    </body>
 </html>

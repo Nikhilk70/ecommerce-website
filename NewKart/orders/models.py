@@ -23,6 +23,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def get_total(self):
+        return sum(item.product.price * item.quantity for item in self.added_items.all())
+    
+    
 class OrderedItem(models.Model):
     product = models.ForeignKey(Product,related_name='added_carts',on_delete=models.SET_NULL,null=True)
     quantity = models.IntegerField(default=1)

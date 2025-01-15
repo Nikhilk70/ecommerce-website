@@ -112,14 +112,14 @@
                      <div class="option_container">
                         <div class="options">
                            {% if user.is_authenticated %}
-                           <a href="{% url 'cart' %}" class="option1">
-                           Add To Cart
-                           </a>
-                           {% else %}
-                           <a href="{% url 'login' %}" class="option1">
-                              Add To Cart
-                           </a>
-                           {% endif %}
+                           <form method="POST" action="{% url 'add_to_cart' product.id %}" class="option1 btn btn-primary">
+                              {% csrf_token %}
+                              <input type="hidden" name="quantity" value="1">
+                              <button type="submit">Add to Cart</button>
+                           </form>
+                       {% else %}
+                           <a href="{% url 'login' %}" class="option1">Add To Cart</a>
+                       {% endif %}
                            {% if user.is_authenticated %}
                            <a href="/products_details/{{ product.id }}/" class="option2">
                            Buy Now

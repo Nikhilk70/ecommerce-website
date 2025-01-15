@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from customers.models import Customer
 
 # Create your views here.
 
@@ -44,3 +47,24 @@ def logout_view(request):
     logout(request)
     return redirect('index')
     
+    
+# customers/views.py
+
+@receiver(post_save, sender=User)
+def create_customer_profile(sender, instance, created, **kwargs):  # Renamed from create_customer
+    if created:
+        Customer.objects.create(user=instance, name=instance.username)
+
+@receiver(post_save, sender=User)
+def save_customer(sender, instance, **kwargs):
+    if hasattr(instance, 'customer'):
+        instance.customer.save()
+        
+def create_customer_view(request):
+    if request.user.is_authenticated:
+        Customer.objects.get_or_create(
+            user=request.user,
+            defaults={'name': request.user.username}
+        )
+        return redirect('cart')
+    return redirect('login')
