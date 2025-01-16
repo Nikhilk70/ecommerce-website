@@ -27,9 +27,13 @@
     </style>
    <body>
       <!-- Cart Section -->
-      <div class="container">
-        <h1>Your Cart</h1>
-
+      <div class="container"><br>
+        <div class="heading_container heading_center">
+            <h2>
+               Your <span>Cart</span>
+            </h2>
+         </div>
+         <br>
         {% if cart.added_items.all %}
         <table>
             <thead>
@@ -59,10 +63,10 @@
                             {% csrf_token %}
                             <input type="hidden" name="item_id" value="{{ item.id }}">
                             <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                            <button type="submit">Update</button>
+                            <button type="submit" class="btn btn-info">Update</button>
                         </form>
                     </td>
-                    <td>${{ item.product.price|floatformat:2|floatformat:2|add:item.quantity|floatformat:2 }}</td>
+                    <td>{{ item.product.price|floatformat:2|floatformat:2|add:item.quantity|floatformat:2 }}</td>
                     <td>
                         <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger">Remove</a>
                     </td>

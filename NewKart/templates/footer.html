@@ -9,9 +9,9 @@
                        <a href="#"><img width="210" src="{% static 'images/logo.png' %}" alt="#" /></a>
                      </div>
                      <div class="information_f">
-                       <p><strong>ADDRESS:</strong> 28 White tower, Street Name New York City, USA</p>
-                       <p><strong>TELEPHONE:</strong> +91 987 654 3210</p>
-                       <p><strong>EMAIL:</strong> yourmain@gmail.com</p>
+                       <p><strong>ADDRESS:</strong> Bangalore City, Bangalore, Karnataka, India</p>
+                       <p><strong>TELEPHONE:</strong> +91 748 356 2874</p>
+                       <p><strong>EMAIL:</strong> customercare@newkart.com</p>
                      </div>
                   </div>
               </div>
@@ -25,9 +25,7 @@
                        <ul>
                           <li><a href="{% url 'index' %}">Home</a></li>
                           <li><a href="{% url 'about' %}">About</a></li>
-                          <li><a href="#">Services</a></li>
-                          <li><a href="#">Testimonial</a></li>
-                          <li><a href="#">Blog</a></li>
+                          <li><a href="{% url 'about' %}">Services</a></li>
                           <li><a href="#">Contact</a></li>
                        </ul>
                     </div>
@@ -36,12 +34,15 @@
                     <div class="widget_menu">
                        <h3>Account</h3>
                        <ul>
-                          <li><a href="{% url 'login' %}">Account</a></li>
-                          <li><a href="#">Checkout</a></li>
+                          <li><a href="{% url 'register' %}">Account</a></li>
+                          {% if user.is_authenticated %}
+                          <li><a href="{% url 'cart' %}">Checkout</a></li>
+                          {% else %}
+                          <li><a href="{% url 'login' %}">Checkout</a></li>
+                          {% endif %}                          
                           <li><a href="{% url 'login' %}">Login</a></li>
                           <li><a href="{% url 'register' %}">Register</a></li>
-                          <li><a href="#">Shopping</a></li>
-                          <li><a href="#">Widget</a></li>
+                          <li><a href="{% url 'products' %}">Shopping</a></li>
                        </ul>
                     </div>
                  </div>

@@ -52,10 +52,10 @@
                      <div class="option_container">
                         <div class="options">
                            {% if user.is_authenticated %}
-                           <form method="POST" action="{% url 'add_to_cart' product.id %}" class="option1 btn btn-primary">
+                           <form method="POST" action="{% url 'add_to_cart' product.id %}" >
                               {% csrf_token %}
                               <input type="hidden" name="quantity" value="1">
-                              <button type="submit">Add to Cart</button>
+                              <button type="submit" class="option1 btn btn-danger">Add to Cart</button>
                           </form>
                            {% else %}
                            <a href="{% url 'login' %}" class="option1">

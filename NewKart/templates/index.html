@@ -11,7 +11,7 @@
          <!-- slider section -->
          <section class="slider_section ">
             <div class="slider_bg_box">
-               <img src="{% static 'images/slider-bg.jpg' %}" alt="">
+               <img src="{% static 'images/fornt.jpg' %}" alt="">
             </div>
             <div id="customCarousel1" class="carousel slide" data-ride="carousel">
                <div class="carousel-inner">
@@ -28,7 +28,7 @@
                                     On Everything
                                  </h1>
                                  <p>
-                                    Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                                    Unwrap amazing deals this holiday season! Get up to 20% off on trending products and enjoy special offers on every purchase. Shop now and make your holidays unforgettable!
                                  </p>
                                  <div class="btn-box">
                                     <a href="{% url 'products' %}" class="btn1">Shop Now</a>
@@ -45,13 +45,13 @@
                               <div class="detail-box">
                                  <h1>
                                     <span>
-                                    Sale 20% Off
+                                    Sale 70% Off
                                     </span>
                                     <br>
                                     On Everything
                                  </h1>
                                  <p>
-                                    Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                                    Ring in the New Year with savings! Avail discounts up to 70% on fashion, electronics, and more. Hurry, these festive deals are only here for a short time!.
                                  </p>
                                  <div class="btn-box">
                                     <a href="{% url 'products' %}" class="btn1">Shop Now</a>
@@ -74,7 +74,7 @@
                                     On Everything
                                  </h1>
                                  <p>
-                                    Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                                    Deck your cart with the best holiday deals! Enjoy unbeatable prices and festive discounts across our entire collection. Shop today and save big this Christmas and New Year!.
                                  </p>
                                  <div class="btn-box">
                                     <a href="{% url 'products' %}" class="btn1">Shop Now</a>
@@ -112,10 +112,10 @@
                      <div class="option_container">
                         <div class="options">
                            {% if user.is_authenticated %}
-                           <form method="POST" action="{% url 'add_to_cart' product.id %}" class="option1 btn btn-primary">
+                           <form method="POST" action="{% url 'add_to_cart' product.id %}" >
                               {% csrf_token %}
                               <input type="hidden" name="quantity" value="1">
-                              <button type="submit">Add to Cart</button>
+                              <button type="submit" class="option1 btn btn-danger">Add to Cart</button>
                            </form>
                        {% else %}
                            <a href="{% url 'login' %}" class="option1">Add To Cart</a>
@@ -165,7 +165,7 @@
                         </h2>
                      </div>
                      <p style="margin-top: 20px;margin-bottom: 30px;">
-                        Vitae fugiat laboriosam officia perferendis provident aliquid voluptatibus dolorem, fugit ullam sit earum id eaque nisi hic? Tenetur commodi, nisi rem vel, ea eaque ab ipsa, autem similique ex unde!
+                        Discover our latest collection with exciting new arrivals that blend style and quality! From trendy fashion to innovative gadgets, we’ve got something for everyone. Each product is carefully selected to match the latest trends and cater to your needs. Explore now and be the first to experience the freshness of our new lineup!.
                      </p>
                      <div class="detail-box">
                         <div class="btn-box">
