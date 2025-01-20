@@ -1,0 +1,178 @@
+<!-- Payment Page -->
+<!DOCTYPE html>
+{% load static %}
+{% include 'base.html' %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="payment.css"> <!-- Link to your CSS file for the payment page -->
+</head>
+<style>
+    /* General Styles */
+    .container{
+        font-family: Arial, sans-serif;
+        justify-content: center;
+    }
+
+/* Container Styles */
+.payment-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Heading */
+.payment-container h2 {
+    margin: 0 0 20px;
+    color: #333;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none;
+}
+
+button.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Payment Method Sections */
+.payment-method {
+    margin-top: 15px;
+}
+
+/* Additional Styles for Responsiveness */
+@media (max-width: 480px) {
+    .payment-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    button.btn {
+        width: 100%;
+        font-size: 14px;
+    }
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="payment-container">
+            <h2>Payment</h2>
+            <form action="/payment_success/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="paymentMethod">Select Payment Method</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="upi">UPI</option>
+                        <option value="debit">Debit Card</option>
+                        <option value="credit">Credit Card</option>
+                        <option value="nfse">NFSE Transfer</option>
+                    </select>
+                </div>
+
+                <!-- UPI Payment -->
+                <div class="form-group payment-method" id="upi-section" style="display: none;">
+                    <label for="upiId">UPI ID</label>
+                    <input type="text" id="upiId" name="upiId">
+                </div>
+
+                <!-- Debit and Credit Card Payment -->
+                <div class="form-group payment-method" id="card-section" style="display: none;">
+                    <label for="cardName">Cardholder Name</label>
+                    <input type="text" id="cardName" name="cardName">
+
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" name="cardNumber">
+
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY">
+
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv">
+                </div>
+
+                <!-- NFSE Transfer -->
+                <div class="form-group payment-method" id="nfse-section" style="display: none;">
+                    <label for="nfseDetails">NFSE Transfer Details</label>
+                    <textarea id="nfseDetails" name="nfseDetails" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn">Confirm Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const paymentMethodSelect = document.getElementById('paymentMethod');
+        const upiSection = document.getElementById('upi-section');
+        const cardSection = document.getElementById('card-section');
+        const nfseSection = document.getElementById('nfse-section');
+
+        paymentMethodSelect.addEventListener('change', () => {
+            const value = paymentMethodSelect.value;
+
+            // Hide all sections
+            upiSection.style.display = 'none';
+            cardSection.style.display = 'none';
+            nfseSection.style.display = 'none';
+
+            // Show selected section
+            if (value === 'upi') {
+                upiSection.style.display = 'block';
+            } else if (value === 'debit' || value === 'credit') {
+                cardSection.style.display = 'block';
+            } else if (value === 'nfse') {
+                nfseSection.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+
+{% endblock %}
+
+{% include 'footer.html' %}

@@ -24,6 +24,9 @@
             text-align: right;
             margin-right: 75px;
         }
+        .checkout{
+            text-align: right;
+        }
     </style>
    <body>
       <!-- Cart Section -->
@@ -78,6 +81,8 @@
         <br>
         <br>
         <h3 class="total">Total: ${{ total_price|floatformat:2 }}</h3>
+        <br>
+        <a href="{% url 'checkout' %}" class="checkout btn btn-primary" >Checkout</a>
         <script>
             // Handle Update Quantity via AJAX
             $(document).on('submit', '.update-form', function (e) {

@@ -4,6 +4,8 @@ from . models import Order, OrderedItem
 from products.models import Product
 from django.http import JsonResponse
 from customers.models import Customer
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -67,3 +69,20 @@ def remove_from_cart(request, item_id):
     item = get_object_or_404(OrderedItem, id= item_id)
     item.delete()
     return redirect('cart')  
+    
+def checkout(request):
+    if request.method == 'POST':
+        # Collect checkout form data and save to session
+        request.session['checkout_data'] = request.POST
+        return HttpResponseRedirect('/payment/')
+    return render(request, 'checkout.html')
+
+def payment(request):
+    if request.method == 'POST':
+        payment_method = request.POST.get('paymentMethod')
+        
+        return render(request, 'payment.html')
+    return render(request, 'payment.html')
+
+def payment_success(request):
+    return render(request, 'payment_success.html')

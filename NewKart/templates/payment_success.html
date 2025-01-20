@@ -1,0 +1,61 @@
+
+{% load static %}
+{% include 'base.html' %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <style>
+        .container{
+            font-family: Arial, sans-serif;
+            justify-content: center;
+        }
+
+        .success-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #28a745;
+        }
+
+        p {
+            margin: 15px 0;
+            color: #555;
+        }
+        a:hover {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="success-container">
+            <h1>Payment Successful!</h1>
+            <p>Thank you for your payment. Your order is being processed.</p>
+            <a class="btn btn-info" href="/">Return to Home</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>
+
+{% endblock %}
+
+{% include 'footer.html' %}

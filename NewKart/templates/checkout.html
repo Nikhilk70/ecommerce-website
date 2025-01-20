@@ -1,0 +1,58 @@
+{% load static %}
+{% include 'base.html' %}
+
+{% block content %}
+<style>
+    form{
+        color: red;
+        font-size: 20px;
+    }
+    input{
+        border: 80px black;
+    }
+    h2{
+        text-decoration: underline black 5px;
+    }
+</style>
+<body>
+    <br>
+    <div class="container">
+        <div class="checkout-container">
+            <h2>Checkout</h2>
+            <br>
+            <form action="/confirm-payment/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">PIN Code</label>
+                    <input type="text" id="zipCode" name="zipCode" required>
+                </div>
+                <button type="submit" class="btn btn-info">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+{% endblock %}
+
+{% include 'footer.html' %}
